@@ -2,7 +2,7 @@ async function main(): Promise<void> {
   console.log("poyo");
 }
 
-main()
+main();
 
 process.on("unhandledRejection", reason => {
   console.error(reason);
