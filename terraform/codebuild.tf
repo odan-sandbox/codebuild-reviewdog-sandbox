@@ -46,6 +46,8 @@ resource "aws_iam_role" "role" {
   name = "${local.name}-role"
 
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy_document.json
+
+  // Remove CodeBuildBasePolicy-*
 }
 
 resource "aws_ssm_parameter" "github_token" {
