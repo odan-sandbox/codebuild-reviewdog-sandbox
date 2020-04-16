@@ -110,11 +110,6 @@ resource "aws_codebuild_webhook" "ci" {
       type    = "EVENT"
       pattern = "PULL_REQUEST_UPDATED"
     }
-
-    filter {
-      type    = "HEAD_REF"
-      pattern = "refs/heads/.*"
-    }
   }
 }
 
