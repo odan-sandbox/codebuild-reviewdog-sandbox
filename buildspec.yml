@@ -7,5 +7,5 @@ phases:
   build:
     commands:
       - echo Hello!
-      - env
       - ./script/reviewdog.sh
+      - yarn test

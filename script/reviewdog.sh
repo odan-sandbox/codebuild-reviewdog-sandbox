@@ -15,9 +15,10 @@ export CI_PULL_REQUEST=$(curl -H "$AUTH_HEADER" \
 export REVIEWDOG_GITHUB_API_TOKEN=$GITHUB_TOKEN
 
 # Download
-curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s
+curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s
 chmod +x ./bin/reviewdog
 
 ./bin/reviewdog -reporter=github-pr-review
-./bin/reviewdog -reporter=github-check
-./bin/reviewdog -reporter=github-pr-check
+# GitHub Apps の導入が必要
+# ./bin/reviewdog -reporter=github-check
+# ./bin/reviewdog -reporter=github-pr-check
