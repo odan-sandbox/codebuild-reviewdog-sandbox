@@ -12,7 +12,7 @@ CI_PULL_REQUEST=$(curl -H "$AUTH_HEADER" \
   "$API_ENDPOINT/repos/$CI_REPO_OWNER/$CI_REPO_NAME/pulls?head=$CI_REPO_OWNER:$CODEBUILD_WEBHOOK_HEAD_REF" \
   | jq ".[].number")
 
-REVIEWDOG_TOKEN=$GITHUB_TOKEN
+REVIEWDOG_GITHUB_API_TOKEN=$GITHUB_TOKEN
 
 # Download
 curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s
