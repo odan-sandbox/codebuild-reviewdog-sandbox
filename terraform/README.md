@@ -1,0 +1,1 @@
+`aws codebuild import-source-credentials` でトークン登録済みな前提
