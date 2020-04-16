@@ -38,6 +38,16 @@ resource "aws_iam_role" "role" {
   assume_role_policy = data.aws_iam_policy_document.assume_role_policy_document.json
 }
 
+resource "aws_ssm_parameter" "github_token" {
+  name  = "/${local.name}/GITHUB_TOKEN"
+  type  = "SecureString"
+  value = "TODO"
+
+  lifecycle {
+    ignore_changes = [value]
+  }
+}
+
 resource "aws_codebuild_project" "ci" {
   name = local.name
 
@@ -61,7 +71,8 @@ resource "aws_codebuild_project" "ci" {
 
     environment_variable {
       name  = "GITHUB_TOKEN"
-      value = "TODO"
+      value = aws_ssm_parameter.github_token.name
+      type  = "PARAMETER_STORE"
     }
   }
 
@@ -87,7 +98,7 @@ resource "aws_codebuild_webhook" "ci" {
   filter_group {
     filter {
       type    = "EVENT"
-      pattern = "PUSH"
+      pattern = "PULL_REQUEST_UPDATED"
     }
 
     filter {
