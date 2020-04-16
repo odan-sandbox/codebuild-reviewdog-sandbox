@@ -111,6 +111,13 @@ resource "aws_codebuild_webhook" "ci" {
       pattern = "PULL_REQUEST_UPDATED"
     }
   }
+
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PULL_REQUEST_CREATED"
+    }
+  }
 }
 
 output "webhook_id" {
