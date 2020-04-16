@@ -19,3 +19,4 @@ curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.s
 chmod +x ./bin/reviewdog
 
 ./bin/reviewdog -reporter=github-pr-review
+./bin/reviewdog -reporter=github-check
