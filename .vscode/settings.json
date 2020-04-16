@@ -1,5 +1,13 @@
 {
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
+  },
+  "terraform.format": {
+    "ignoreExtensionsOnSave": [
+      ".tfsmurf"
+    ]
+  },
+  "[terraform]": {
+    "editor.formatOnSave": true
   }
 }
