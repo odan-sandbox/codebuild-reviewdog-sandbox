@@ -21,19 +21,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-
-    - name: yarn install
+    - name: npm install, build, and test
       run: |
         yarn install --frozen-lockfile
-
-    - name: Run reviewdog
-      run: |
-        curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh | sh -s
-        chmod +x ./bin/reviewdog
-        ./bin/reviewdog -reporter=github-pr-check
-      env:
-        REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Run test
-      run: |      
         yarn test
+      env:
+        CI: true
