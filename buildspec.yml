@@ -8,3 +8,4 @@ phases:
     commands:
       - echo Hello!
       - env
+      - ./script/reviewdog.sh

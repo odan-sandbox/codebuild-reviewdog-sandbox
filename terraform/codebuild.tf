@@ -58,6 +58,11 @@ resource "aws_codebuild_project" "ci" {
     image                       = "aws/codebuild/standard:4.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+
+    environment_variable {
+      name  = "GITHUB_TOKEN"
+      value = "TODO"
+    }
   }
 
   logs_config {
@@ -65,6 +70,14 @@ resource "aws_codebuild_project" "ci" {
       group_name  = local.name
       stream_name = "codebuild"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      // :thinking_face:
+      // environment[0].environment_variable[0]
+      // element(lookup(element(tolist(environment), 0), "environment_variable"), 0)
+    ]
   }
 }
 
