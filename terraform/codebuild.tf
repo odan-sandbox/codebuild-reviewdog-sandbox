@@ -67,3 +67,35 @@ resource "aws_codebuild_project" "ci" {
     }
   }
 }
+
+resource "aws_codebuild_webhook" "ci" {
+  project_name = aws_codebuild_project.ci.name
+
+  filter_group {
+    filter {
+      type    = "EVENT"
+      pattern = "PUSH"
+    }
+
+    filter {
+      type    = "HEAD_REF"
+      pattern = "refs/heads/.*"
+    }
+  }
+}
+
+output "webhook_id" {
+  value = aws_codebuild_webhook.ci.id
+}
+
+output "webhook_payload_url" {
+  value = aws_codebuild_webhook.ci.payload_url
+}
+
+output "webhook_url" {
+  value = aws_codebuild_webhook.ci.url
+}
+
+output "webhook_secret" {
+  value = aws_codebuild_webhook.ci.secret
+}
