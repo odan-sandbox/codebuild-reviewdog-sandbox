@@ -1,5 +1,20 @@
 
-data "aws_iam_policy_document" "assume_role_policy" {
+data "aws_iam_policy_document" "policy_document" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents"
+    ]
+
+    // TODO
+    resources = [
+      "*",
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "assume_role_policy_document" {
   statement {
     actions = ["sts:AssumeRole"]
 
@@ -10,14 +25,21 @@ data "aws_iam_policy_document" "assume_role_policy" {
   }
 }
 
-resource "aws_iam_role" "role" {
-  name = "codebuild-reviewdog-sandbox-role"
+resource "aws_iam_role_policy" "policy" {
+  name = "${local.name}-policy"
 
-  assume_role_policy = data.aws_iam_policy_document.assume_role_policy.json
+  role   = aws_iam_role.role.id
+  policy = data.aws_iam_policy_document.policy_document.json
+}
+
+resource "aws_iam_role" "role" {
+  name = "${local.name}-role"
+
+  assume_role_policy = data.aws_iam_policy_document.assume_role_policy_document.json
 }
 
 resource "aws_codebuild_project" "ci" {
-  name = "codebuild-reviewdog-sandbox"
+  name = local.name
 
   service_role = aws_iam_role.role.arn
 
@@ -36,5 +58,12 @@ resource "aws_codebuild_project" "ci" {
     image                       = "aws/codebuild/standard:4.0"
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
+  }
+
+  logs_config {
+    cloudwatch_logs {
+      group_name  = local.name
+      stream_name = "codebuild"
+    }
   }
 }
