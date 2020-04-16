@@ -20,3 +20,4 @@ chmod +x ./bin/reviewdog
 
 ./bin/reviewdog -reporter=github-pr-review
 ./bin/reviewdog -reporter=github-check
+./bin/reviewdog -reporter=github-pr-check
