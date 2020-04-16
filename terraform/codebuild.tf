@@ -12,6 +12,16 @@ data "aws_iam_policy_document" "policy_document" {
       "*",
     ]
   }
+
+  statement {
+    actions = [
+      "ssm:GetParameters"
+    ]
+
+    resources = [
+      aws_ssm_parameter.github_token.arn
+    ]
+  }
 }
 
 data "aws_iam_policy_document" "assume_role_policy_document" {
